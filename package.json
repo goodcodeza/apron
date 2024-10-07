@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "format": "prettier --write .",
     "lint": "next lint",
     "prepare": "husky"
   },
@@ -23,6 +24,7 @@
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
     "postcss": "^8",
+    "prettier": "^3.3.3",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

@@ -1,0 +1,9 @@
+# dependencies
+package-lock.json
+
+# next.js
+/.next/
+/out/
+
+# typescript
+next-env.d.ts
