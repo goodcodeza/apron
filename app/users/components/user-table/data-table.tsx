@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import {
 	ColumnDef,
 	SortingState,
@@ -17,7 +18,7 @@ import {
 	TableHeader,
 	TableRow
 } from '@/components/ui/table';
-import { useState } from 'react';
+import * as testids from '@/e2e/test-ids';
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -39,7 +40,7 @@ export const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData
 
 	return (
 		<div className="rounded-md border">
-			<Table>
+			<Table data-testid={testids.USERS_TABLE}>
 				<TableHeader>
 					{table.getHeaderGroups().map((headerGroup) => (
 						<TableRow key={headerGroup.id}>

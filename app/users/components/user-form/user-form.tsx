@@ -24,6 +24,7 @@ import {
 import { GENDER } from '@/app/users/constants';
 import { UserFormSchema } from '@/app/users/schema';
 import * as types from '@/app/users/types';
+import * as testids from '@/e2e/test-ids';
 
 type UserFormProps = {
 	user?: types.UserForm;
@@ -58,15 +59,21 @@ export const UserForm = ({ user, action, onCancel, onSubmit }: UserFormProps) =>
 							<FormLabel>Gender</FormLabel>
 							<Select onValueChange={field.onChange} defaultValue={field.value}>
 								<FormControl>
-									<SelectTrigger>
+									<SelectTrigger data-testid={testids.USER_FORM_FORM_CONTROL_GENDER}>
 										<SelectValue />
 									</SelectTrigger>
 								</FormControl>
 								<SelectContent>
-									<SelectItem value={GENDER.female}>
+									<SelectItem
+										value={GENDER.female}
+										data-testid={testids.USER_FORM_FORM_CONTROL_GENDER_OPTION_FEMALE}
+									>
 										<span className="capitalize">{GENDER.female}</span>
 									</SelectItem>
-									<SelectItem value={GENDER.male}>
+									<SelectItem
+										value={GENDER.male}
+										data-testid={testids.USER_FORM_FORM_CONTROL_GENDER_OPTION_MALE}
+									>
 										<span className="capitalize">{GENDER.male}</span>
 									</SelectItem>
 								</SelectContent>
@@ -82,7 +89,7 @@ export const UserForm = ({ user, action, onCancel, onSubmit }: UserFormProps) =>
 						<FormItem>
 							<FormLabel>First Name</FormLabel>
 							<FormControl>
-								<Input {...field} />
+								<Input {...field} data-testid={testids.USER_FORM_FORM_CONTROL_FIRST_NAME} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -95,7 +102,7 @@ export const UserForm = ({ user, action, onCancel, onSubmit }: UserFormProps) =>
 						<FormItem>
 							<FormLabel>Last Name</FormLabel>
 							<FormControl>
-								<Input {...field} />
+								<Input {...field} data-testid={testids.USER_FORM_FORM_CONTROL_LAST_NAME} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -108,9 +115,9 @@ export const UserForm = ({ user, action, onCancel, onSubmit }: UserFormProps) =>
 						<FormItem>
 							<FormLabel>Age</FormLabel>
 							<FormControl>
-								<Input {...field} />
+								<Input {...field} data-testid={testids.USER_FORM_FORM_CONTROL_AGE} />
 							</FormControl>
-							<FormMessage />
+							<FormMessage data-testid={testids.USER_FORM_FORM_CONTROL_AGE_ERROR} />
 						</FormItem>
 					)}
 				/>
@@ -118,7 +125,11 @@ export const UserForm = ({ user, action, onCancel, onSubmit }: UserFormProps) =>
 					<Button variant="ghost" type="button" onClick={onCancel}>
 						Cancel
 					</Button>
-					<Button className="col-span-3" type="submit">
+					<Button
+						className="col-span-3"
+						type="submit"
+						data-testid={testids.USER_FORM_ACTION_SUBMIT}
+					>
 						{action.submit.text}
 					</Button>
 				</div>

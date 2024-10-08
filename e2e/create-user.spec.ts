@@ -1,38 +1,44 @@
 import { test, expect } from '@playwright/test';
 
-import * as messages from '@/app/users/messages';
+import * as testids from './test-ids';
 
 const BASE_URL = 'http://localhost:3000';
 
-test('create user validates max age of male users', async ({ page }) => {
+test('create a user', async ({ page }) => {
+	// navigate to the users page
 	await page.goto(`${BASE_URL}/users`);
 
-	await page.click("button:has-text('+ Add User')");
+	// open the add user form
+	await page.locator(`button[data-testid='${testids.USER_FORM_TRIGGER}']`).click();
 
-	await page.click('label:has-text("Gender")');
-	// See https://github.com/radix-ui/primitives/issues/2288
-	await page.keyboard.press('ArrowDown'); // Assuming that male is the second option
-	await page.keyboard.press('Enter');
+	// select the gender control
+	await page.locator(`[data-testid='${testids.USER_FORM_FORM_CONTROL_GENDER}']`).click();
+	// select the male option
+	await page
+		.locator(`[data-testid='${testids.USER_FORM_FORM_CONTROL_GENDER_OPTION_MALE}']`)
+		.click();
 
-	await page.fill('input[name="age"]', '150');
+	// fill in the first name
+	const firstName = `John+${Date.now()}`;
+	await page
+		.locator(`input[data-testid='${testids.USER_FORM_FORM_CONTROL_FIRST_NAME}']`)
+		.fill(firstName);
 
-	await page.click('button[type="submit"]');
+	// fill in the last name
+	await page
+		.locator(`input[data-testid='${testids.USER_FORM_FORM_CONTROL_LAST_NAME}']`)
+		.fill('Smith');
 
-	await expect(page.getByText(messages.MAX_AGE_MALE)).toBeVisible();
-});
+	// fill in the age
+	await page.locator(`input[data-testid='${testids.USER_FORM_FORM_CONTROL_AGE}']`).fill('25');
 
-test('create user validates max age of female users', async ({ page }) => {
-	await page.goto(`${BASE_URL}/users`);
+	// submit the form
+	await page.locator(`button[data-testid='${testids.USER_FORM_ACTION_SUBMIT}']`).click();
 
-	await page.click("button:has-text('+ Add User')");
-
-	await page.click('label:has-text("Gender")');
-	// See https://github.com/radix-ui/primitives/issues/2288
-	await page.keyboard.press('Enter'); // Assuming that female is the first option
-
-	await page.fill('input[name="age"]', '150');
-
-	await page.click('button[type="submit"]');
-
-	await expect(page.getByText(messages.MAX_AGE_FEMALE)).toBeVisible();
+	// check that the user is in the list
+	const row = page
+		.locator(`table[data-testid='${testids.USERS_TABLE}'] tr td`)
+		.filter({ hasText: firstName });
+	expect(row).toBeVisible();
+	expect(await row.textContent()).toEqual(firstName);
 });

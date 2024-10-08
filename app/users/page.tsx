@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { UserFormDialog } from './components/user-form/user-form-dialog';
 import { columns } from './components/user-table/columns';
 import { DataTable } from './components/user-table/data-table';
+import * as testids from '@/e2e/test-ids';
 import * as messages from './messages';
 import { createUser, getUsers } from './user-service';
 
@@ -23,7 +24,7 @@ export default async function Users() {
 					}}
 					onSubmit={createUser}
 				>
-					<Button>+ Add User</Button>
+					<Button data-testid={testids.USER_FORM_TRIGGER}>+ Add User</Button>
 				</UserFormDialog>
 			</header>
 			<DataTable columns={columns} data={data} />
