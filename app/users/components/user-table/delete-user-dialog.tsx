@@ -44,8 +44,15 @@ export const DeleteUserDialog = ({ id, onConfirm, action, children }: DeleteUser
 					<AlertDialogTitle>Are you sure you want to delete this user?</AlertDialogTitle>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
-					<AlertDialogCancel>Cancel</AlertDialogCancel>
-					<AlertDialogAction onClick={handleConfirm}>Continue</AlertDialogAction>
+					<div className="grow grid grid-rows-2 grid-flow-col gap-2">
+						<AlertDialogAction
+							className="bg-red-500 hover:bg-red-600 text-white"
+							onClick={handleConfirm}
+						>
+							Continue
+						</AlertDialogAction>
+						<AlertDialogCancel>Cancel</AlertDialogCancel>
+					</div>
 				</AlertDialogFooter>
 			</AlertDialogContent>
 		</AlertDialog>
