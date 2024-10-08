@@ -61,7 +61,15 @@ export const columns: ColumnDef<User>[] = [
 					>
 						<Button variant="outline">Edit</Button>
 					</UserFormDialog>
-					<DeleteUserDialog id={user.id} onConfirm={deleteUser}>
+					<DeleteUserDialog
+						id={user.id}
+						onConfirm={deleteUser}
+						action={{
+							submit: {
+								onSuccess: messages.DELETE_USER_SUCCESS_TOAST
+							}
+						}}
+					>
 						<Button variant="ghost" size="icon">
 							<TrashIcon className="h-4 w-4" />
 						</Button>

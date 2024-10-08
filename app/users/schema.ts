@@ -8,15 +8,22 @@ const GenderSchema = string()
 	.required(messages.FORM_FIELD_REQUIRED)
 	.oneOf([constants.GENDER.male, constants.GENDER.female]);
 
-const FirstNameSchema = string().required(messages.FORM_FIELD_REQUIRED);
+const FirstNameSchema = string()
+	.required(messages.FORM_FIELD_REQUIRED)
+	.min(constants.NAME_MIN_LENGTH)
+	.max(constants.NAME_MAX_LENGTH);
 
-const LastNameSchema = string().required(messages.FORM_FIELD_REQUIRED);
+const LastNameSchema = string()
+	.required(messages.FORM_FIELD_REQUIRED)
+	.min(constants.NAME_MIN_LENGTH)
+	.max(constants.NAME_MAX_LENGTH);
 
 const AgeSchema = number()
 	.transform((value: number) => (isNaN(value) ? undefined : value))
 	.required(messages.FORM_FIELD_REQUIRED)
 	.positive()
 	.integer()
+	.min(constants.MIN_AGE)
 	.when('gender', {
 		is: constants.GENDER.male,
 		then: (schema) => schema.max(constants.MAX_AGE_MALE, messages.MAX_AGE_MALE)
@@ -41,4 +48,4 @@ export const UserSchema = object({
 	age: AgeSchema
 });
 
-export const UsersResponseSchema = array(UserSchema).required();
+export const UsersResponseSchema = array(UserSchema);

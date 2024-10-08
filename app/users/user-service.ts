@@ -11,7 +11,7 @@ export const getUsers = async (): Promise<User[]> => {
 		next: { tags: [CACHE_TAG_GET_USERS] }
 	}).then((res) => res.json());
 
-	return UsersResponseSchema.validate(data);
+	return UsersResponseSchema.cast(data) ?? [];
 };
 
 export const createUser = async (values: UserForm): Promise<void> => {

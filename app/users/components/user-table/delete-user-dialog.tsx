@@ -11,19 +11,29 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger
 } from '@/components/ui/alert-dialog';
+import { useToast } from '@/hooks/use-toast';
 
 type DeleteUserDialogProps = {
 	id: string;
 	onConfirm: (id: string) => Promise<void>;
+	action: {
+		submit: {
+			onSuccess: string;
+		};
+	};
 	children: React.ReactNode;
 };
 
-export const DeleteUserDialog = ({ id, onConfirm, children }: DeleteUserDialogProps) => {
+export const DeleteUserDialog = ({ id, onConfirm, action, children }: DeleteUserDialogProps) => {
 	const [open, setOpen] = useState(false);
+	const { toast } = useToast();
 
 	const handleConfirm = async () => {
 		await onConfirm(id);
 		setOpen(false);
+		toast({
+			description: action.submit.onSuccess
+		});
 	};
 
 	return (
