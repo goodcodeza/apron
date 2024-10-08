@@ -22,10 +22,11 @@ import {
 } from '@/components/ui/select';
 
 import { GENDER } from '@/app/users/constants';
-import { type User, UserSchema } from '@/app/users/schema';
+import { UserFormSchema } from '@/app/users/schema';
+import * as types from '@/app/users/types';
 
 type UserFormProps = {
-	user?: User;
+	user?: types.UserForm;
 	action: {
 		submit: {
 			text: string;
@@ -35,8 +36,8 @@ type UserFormProps = {
 };
 
 export const UserForm = ({ user, action, onCancel }: UserFormProps) => {
-	const form = useForm<User>({
-		resolver: yupResolver(UserSchema),
+	const form = useForm<types.UserForm>({
+		resolver: yupResolver(UserFormSchema),
 		defaultValues: user ?? {
 			firstName: '',
 			lastName: '',
@@ -45,7 +46,7 @@ export const UserForm = ({ user, action, onCancel }: UserFormProps) => {
 		}
 	});
 
-	const onSubmit = (values: User) => {
+	const onSubmit = (values: types.UserForm) => {
 		console.log(values);
 	};
 

@@ -9,11 +9,11 @@ import {
 	DialogTrigger
 } from '@/components/ui/dialog';
 
-import { User } from '@/app/users/schema';
+import * as types from '@/app/users/types';
 import { UserForm } from './user-form';
 
 type UserDialogProps = {
-	user?: User;
+	user?: types.UserForm;
 	title: string;
 	action: {
 		submit: {

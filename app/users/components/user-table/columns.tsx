@@ -4,7 +4,7 @@ import { CaretSortIcon, TrashIcon } from '@radix-ui/react-icons';
 import { Column, ColumnDef } from '@tanstack/react-table';
 
 import * as messages from '@/app/users/messages';
-import { User } from '@/app/users/schema';
+import { User } from '@/app/users/types';
 import { Button } from '@/components/ui/button';
 
 import { UserFormDialog } from '../user-form/user-form-dialog';

@@ -4,28 +4,10 @@ import { UserFormDialog } from './components/user-form/user-form-dialog';
 import { columns } from './components/user-table/columns';
 import { DataTable } from './components/user-table/data-table';
 import * as messages from './messages';
-import { User } from './schema';
-
-async function getData(): Promise<User[]> {
-	// Fetch data from your API here.
-	return [
-		{
-			age: 22,
-			firstName: 'John',
-			lastName: 'Smith',
-			gender: 'male'
-		},
-		{
-			age: 21,
-			firstName: 'Jane',
-			lastName: 'Doe',
-			gender: 'female'
-		}
-	];
-}
+import { getUsers } from './user-service';
 
 export default async function Users() {
-	const data = await getData();
+	const data = await getUsers();
 
 	return (
 		<main className="container mx-auto px-4">
