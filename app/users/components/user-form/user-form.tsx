@@ -28,16 +28,18 @@ import * as testids from '@/e2e/test-ids';
 
 type UserFormProps = {
 	user?: types.UserForm;
+	// TODO: move this into a Messages Context
 	action: {
 		submit: {
 			text: string;
 		};
 	};
+	disabled: boolean;
 	onCancel: () => void;
 	onSubmit: (values: types.UserForm) => void;
 };
 
-export const UserForm = ({ user, action, onCancel, onSubmit }: UserFormProps) => {
+export const UserForm = ({ user, action, disabled, onCancel, onSubmit }: UserFormProps) => {
 	const form = useForm<types.UserForm>({
 		resolver: yupResolver(UserFormSchema),
 		defaultValues: user ?? {
@@ -50,7 +52,7 @@ export const UserForm = ({ user, action, onCancel, onSubmit }: UserFormProps) =>
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
 				<FormField
 					control={form.control}
 					name="gender"
@@ -128,6 +130,7 @@ export const UserForm = ({ user, action, onCancel, onSubmit }: UserFormProps) =>
 					<Button
 						className="col-span-3"
 						type="submit"
+						disabled={disabled || form.formState.isSubmitting}
 						data-testid={testids.USER_FORM_ACTION_SUBMIT}
 					>
 						{action.submit.text}

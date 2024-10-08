@@ -28,9 +28,11 @@ type UserDialogProps = {
 
 export const UserFormDialog = ({ user, title, action, onSubmit, children }: UserDialogProps) => {
 	const [open, setOpen] = useState(false);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { toast } = useToast();
 
 	const handleSubmit = async (values: types.UserForm) => {
+		setIsSubmitting(true);
 		try {
 			await onSubmit(values);
 			setOpen(false);
@@ -45,6 +47,7 @@ export const UserFormDialog = ({ user, title, action, onSubmit, children }: User
 				description: 'There was a problem with your request.'
 			});
 			console.error(error);
+			setIsSubmitting(false); // allow the user to retry
 		}
 	};
 
@@ -58,6 +61,7 @@ export const UserFormDialog = ({ user, title, action, onSubmit, children }: User
 				<UserForm
 					user={user}
 					action={action}
+					disabled={isSubmitting}
 					onCancel={() => setOpen(false)}
 					onSubmit={handleSubmit}
 				/>
