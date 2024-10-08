@@ -4,4 +4,4 @@ export const MAX_AGE_FEMALE = 117;
 export const GENDER = {
 	male: 'male',
 	female: 'female'
-} as const;
+};

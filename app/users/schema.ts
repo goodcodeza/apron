@@ -4,12 +4,15 @@ import * as constants from './constants';
 import * as messages from './messages';
 
 export const UserSchema = object({
-	id: string().required(),
-	gender: string().required().oneOf([constants.GENDER.male, constants.GENDER.female]),
-	firstName: string().required(),
-	lastName: string().required(),
+	gender: string()
+		.transform((value: string) => (value.trim().length === 0 ? undefined : value))
+		.required(messages.FORM_FIELD_REQUIRED)
+		.oneOf([constants.GENDER.male, constants.GENDER.female]),
+	firstName: string().required(messages.FORM_FIELD_REQUIRED),
+	lastName: string().required(messages.FORM_FIELD_REQUIRED),
 	age: number()
-		.required()
+		.transform((value: number) => (isNaN(value) ? undefined : value))
+		.required(messages.FORM_FIELD_REQUIRED)
 		.positive()
 		.integer()
 		.when('gender', {
