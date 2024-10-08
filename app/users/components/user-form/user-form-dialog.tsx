@@ -8,6 +8,7 @@ import {
 	DialogTitle,
 	DialogTrigger
 } from '@/components/ui/dialog';
+import { useToast } from '@/hooks/use-toast';
 
 import * as types from '@/app/users/types';
 import { UserForm } from './user-form';
@@ -18,6 +19,7 @@ type UserDialogProps = {
 	action: {
 		submit: {
 			text: string;
+			onSuccess: string;
 		};
 	};
 	onSubmit: (values: types.UserForm) => Promise<void>;
@@ -26,15 +28,23 @@ type UserDialogProps = {
 
 export const UserFormDialog = ({ user, title, action, onSubmit, children }: UserDialogProps) => {
 	const [open, setOpen] = useState(false);
+	const { toast } = useToast();
 
 	const handleSubmit = async (values: types.UserForm) => {
 		try {
 			await onSubmit(values);
+			setOpen(false);
+			toast({
+				description: action.submit.onSuccess
+			});
 		} catch (error) {
 			// TODO: better error handling
+			toast({
+				variant: 'destructive',
+				title: 'Uh oh! Something went wrong.',
+				description: 'There was a problem with your request.'
+			});
 			console.error(error);
-		} finally {
-			setOpen(false);
 		}
 	};
 

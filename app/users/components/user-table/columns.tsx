@@ -50,7 +50,12 @@ export const columns: ColumnDef<User>[] = [
 					<UserFormDialog
 						user={user}
 						title={messages.EDIT_USER_FORM_TITLE}
-						action={{ submit: { text: messages.FORM_ACTION_SAVE_USER } }}
+						action={{
+							submit: {
+								text: messages.FORM_ACTION_SAVE_USER,
+								onSuccess: messages.SAVE_USER_SUCCESS_TOAST
+							}
+						}}
 						onSubmit={(values) => editUser(user.id, values)}
 					>
 						<Button variant="outline">Edit</Button>
