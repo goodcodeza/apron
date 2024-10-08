@@ -4,6 +4,7 @@ import { CaretSortIcon, TrashIcon } from '@radix-ui/react-icons';
 import { Column, ColumnDef } from '@tanstack/react-table';
 
 import * as messages from '@/app/users/messages';
+import { editUser } from '@/app/users/user-service';
 import { User } from '@/app/users/types';
 import { Button } from '@/components/ui/button';
 
@@ -50,6 +51,7 @@ export const columns: ColumnDef<User>[] = [
 						user={user}
 						title={messages.EDIT_USER_FORM_TITLE}
 						action={{ submit: { text: messages.FORM_ACTION_SAVE_USER } }}
+						onSubmit={(values) => editUser(user.id, values)}
 					>
 						<Button variant="outline">Edit</Button>
 					</UserFormDialog>

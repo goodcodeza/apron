@@ -20,11 +20,23 @@ type UserDialogProps = {
 			text: string;
 		};
 	};
+	onSubmit: (values: types.UserForm) => Promise<void>;
 	children: React.ReactNode;
 };
 
-export const UserFormDialog = ({ user, title, action, children }: UserDialogProps) => {
+export const UserFormDialog = ({ user, title, action, onSubmit, children }: UserDialogProps) => {
 	const [open, setOpen] = useState(false);
+
+	const handleSubmit = async (values: types.UserForm) => {
+		try {
+			await onSubmit(values);
+		} catch (error) {
+			// TODO: better error handling
+			console.error(error);
+		} finally {
+			setOpen(false);
+		}
+	};
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
@@ -33,7 +45,12 @@ export const UserFormDialog = ({ user, title, action, children }: UserDialogProp
 				<DialogHeader>
 					<DialogTitle>{title}</DialogTitle>
 				</DialogHeader>
-				<UserForm user={user} action={action} onCancel={() => setOpen(false)} />
+				<UserForm
+					user={user}
+					action={action}
+					onCancel={() => setOpen(false)}
+					onSubmit={handleSubmit}
+				/>
 			</DialogContent>
 		</Dialog>
 	);

@@ -33,9 +33,10 @@ type UserFormProps = {
 		};
 	};
 	onCancel: () => void;
+	onSubmit: (values: types.UserForm) => void;
 };
 
-export const UserForm = ({ user, action, onCancel }: UserFormProps) => {
+export const UserForm = ({ user, action, onCancel, onSubmit }: UserFormProps) => {
 	const form = useForm<types.UserForm>({
 		resolver: yupResolver(UserFormSchema),
 		defaultValues: user ?? {
@@ -45,10 +46,6 @@ export const UserForm = ({ user, action, onCancel }: UserFormProps) => {
 			age: '' as unknown as number
 		}
 	});
-
-	const onSubmit = (values: types.UserForm) => {
-		console.log(values);
-	};
 
 	return (
 		<Form {...form}>

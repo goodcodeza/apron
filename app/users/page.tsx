@@ -4,7 +4,7 @@ import { UserFormDialog } from './components/user-form/user-form-dialog';
 import { columns } from './components/user-table/columns';
 import { DataTable } from './components/user-table/data-table';
 import * as messages from './messages';
-import { getUsers } from './user-service';
+import { createUser, getUsers } from './user-service';
 
 export default async function Users() {
 	const data = await getUsers();
@@ -16,6 +16,7 @@ export default async function Users() {
 				<UserFormDialog
 					title={messages.ADD_USER_FORM_TITLE}
 					action={{ submit: { text: messages.FORM_ACTION_CREATE_USER } }}
+					onSubmit={createUser}
 				>
 					<Button>+ Add User</Button>
 				</UserFormDialog>
