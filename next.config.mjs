@@ -8,6 +8,9 @@ const nextConfig = {
 				permanent: true
 			}
 		];
+	},
+	compiler: {
+		reactRemoveProperties: process.env.NODE_ENV === 'production'
 	}
 };
 
