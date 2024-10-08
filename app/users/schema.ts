@@ -5,32 +5,32 @@ import * as messages from './messages';
 
 const GenderSchema = string()
 	.transform((value: string) => (value.trim().length === 0 ? undefined : value))
-	.required(messages.FORM_FIELD_REQUIRED)
-	.oneOf([constants.GENDER.male, constants.GENDER.female]);
+	.required(messages.FORM_CONTROL_REQUIRED)
+	.oneOf([constants.USER_GENDER.male, constants.USER_GENDER.female]);
 
 const FirstNameSchema = string()
-	.required(messages.FORM_FIELD_REQUIRED)
-	.min(constants.NAME_MIN_LENGTH)
-	.max(constants.NAME_MAX_LENGTH);
+	.required(messages.FORM_CONTROL_REQUIRED)
+	.min(constants.USER_NAME_MIN_LENGTH, messages.FORM_CONTROL_FIRST_NAME_MIN_LENGTH)
+	.max(constants.USER_NAME_MAX_LENGTH, messages.FORM_CONTROL_FIRST_NAME_MAX_LENGTH);
 
 const LastNameSchema = string()
-	.required(messages.FORM_FIELD_REQUIRED)
-	.min(constants.NAME_MIN_LENGTH)
-	.max(constants.NAME_MAX_LENGTH);
+	.required(messages.FORM_CONTROL_REQUIRED)
+	.min(constants.USER_NAME_MIN_LENGTH, messages.FORM_CONTROL_LAST_NAME_MIN_LENGTH)
+	.max(constants.USER_NAME_MAX_LENGTH, messages.FORM_CONTROL_LAST_NAME_MAX_LENGTH);
 
 const AgeSchema = number()
 	.transform((value: number) => (isNaN(value) ? undefined : value))
-	.required(messages.FORM_FIELD_REQUIRED)
-	.positive()
+	.required(messages.FORM_CONTROL_REQUIRED)
 	.integer()
-	.min(constants.MIN_AGE)
+	.min(constants.USER_AGE_MIN, messages.FORM_CONTROL_AGE_MIN)
 	.when('gender', {
-		is: constants.GENDER.male,
-		then: (schema) => schema.max(constants.MAX_AGE_MALE, messages.MAX_AGE_MALE)
+		is: constants.USER_GENDER.male,
+		then: (schema) => schema.max(constants.USER_AGE_MAX_MALE, messages.FORM_CONTROL_AGE_MAX_MALE)
 	})
 	.when('gender', {
-		is: constants.GENDER.female,
-		then: (schema) => schema.max(constants.MAX_AGE_FEMALE, messages.MAX_AGE_FEMALE)
+		is: constants.USER_GENDER.female,
+		then: (schema) =>
+			schema.max(constants.USER_AGE_MAX_FEMALE, messages.FORM_CONTROL_AGE_MAX_FEMALE)
 	});
 
 export const UserFormSchema = object({

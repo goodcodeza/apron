@@ -37,8 +37,9 @@ test('create a user', async ({ page }) => {
 
 	// check that the user is in the list
 	const row = page
-		.locator(`table[data-testid='${testids.USERS_TABLE}'] tr td`)
+		.locator(`table[data-testid='${testids.USERS_TABLE}'] td`)
 		.filter({ hasText: firstName });
+	await row.scrollIntoViewIfNeeded();
 	expect(row).toBeVisible();
 	expect(await row.textContent()).toEqual(firstName);
 });

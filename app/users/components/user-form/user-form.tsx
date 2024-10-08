@@ -21,7 +21,7 @@ import {
 	SelectValue
 } from '@/components/ui/select';
 
-import { GENDER } from '@/app/users/constants';
+import { USER_GENDER } from '@/app/users/constants';
 import { UserFormSchema } from '@/app/users/schema';
 import * as types from '@/app/users/types';
 import * as testids from '@/e2e/test-ids';
@@ -65,16 +65,16 @@ export const UserForm = ({ user, action, onCancel, onSubmit }: UserFormProps) =>
 								</FormControl>
 								<SelectContent>
 									<SelectItem
-										value={GENDER.female}
+										value={USER_GENDER.female}
 										data-testid={testids.USER_FORM_FORM_CONTROL_GENDER_OPTION_FEMALE}
 									>
-										<span className="capitalize">{GENDER.female}</span>
+										<span className="capitalize">{USER_GENDER.female}</span>
 									</SelectItem>
 									<SelectItem
-										value={GENDER.male}
+										value={USER_GENDER.male}
 										data-testid={testids.USER_FORM_FORM_CONTROL_GENDER_OPTION_MALE}
 									>
-										<span className="capitalize">{GENDER.male}</span>
+										<span className="capitalize">{USER_GENDER.male}</span>
 									</SelectItem>
 								</SelectContent>
 							</Select>

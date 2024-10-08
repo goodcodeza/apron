@@ -28,7 +28,7 @@ test('create user validates max age of male users', async ({ page }) => {
 	// check that the error message is visible
 	const errorMessage = page.locator(`[data-testid='${testids.USER_FORM_FORM_CONTROL_AGE_ERROR}']`);
 	expect(await errorMessage.isVisible()).toBe(true);
-	expect(await errorMessage.textContent()).toBe(messages.MAX_AGE_MALE);
+	expect(await errorMessage.textContent()).toBe(messages.FORM_CONTROL_AGE_MAX_MALE);
 });
 
 test('create user validates max age of female users', async ({ page }) => {
@@ -54,5 +54,5 @@ test('create user validates max age of female users', async ({ page }) => {
 	// check that the error message is visible
 	const errorMessage = page.locator(`[data-testid='${testids.USER_FORM_FORM_CONTROL_AGE_ERROR}']`);
 	expect(await errorMessage.isVisible()).toBe(true);
-	expect(await errorMessage.textContent()).toBe(messages.MAX_AGE_FEMALE);
+	expect(await errorMessage.textContent()).toBe(messages.FORM_CONTROL_AGE_MAX_FEMALE);
 });
