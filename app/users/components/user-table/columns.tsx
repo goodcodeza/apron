@@ -4,11 +4,12 @@ import { CaretSortIcon, TrashIcon } from '@radix-ui/react-icons';
 import { Column, ColumnDef } from '@tanstack/react-table';
 
 import * as messages from '@/app/users/messages';
-import { editUser } from '@/app/users/user-service';
+import { deleteUser, editUser } from '@/app/users/user-service';
 import { User } from '@/app/users/types';
 import { Button } from '@/components/ui/button';
 
 import { UserFormDialog } from '../user-form/user-form-dialog';
+import { DeleteUserDialog } from './delete-user-dialog';
 
 export const columns: ColumnDef<User>[] = [
 	{
@@ -60,9 +61,11 @@ export const columns: ColumnDef<User>[] = [
 					>
 						<Button variant="outline">Edit</Button>
 					</UserFormDialog>
-					<Button variant="ghost" size="icon">
-						<TrashIcon className="h-4 w-4" />
-					</Button>
+					<DeleteUserDialog id={user.id} onConfirm={deleteUser}>
+						<Button variant="ghost" size="icon">
+							<TrashIcon className="h-4 w-4" />
+						</Button>
+					</DeleteUserDialog>
 				</div>
 			);
 		}

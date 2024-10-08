@@ -15,7 +15,7 @@ export const getUsers = async (): Promise<User[]> => {
 };
 
 export const createUser = async (values: UserForm): Promise<void> => {
-	await fetch(new URL(`/api/users`, process.env.NEXT_PUBLIC_API_BASE_URL), {
+	await fetch(new URL('/api/users', process.env.NEXT_PUBLIC_API_BASE_URL), {
 		method: 'POST',
 		body: JSON.stringify(values),
 		headers: { 'Content-Type': 'application/json' }
@@ -29,6 +29,14 @@ export const editUser = async (id: string, values: UserForm): Promise<void> => {
 		method: 'PATCH',
 		body: JSON.stringify(values),
 		headers: { 'Content-Type': 'application/json' }
+	});
+
+	revalidateTag(CACHE_TAG_GET_USERS);
+};
+
+export const deleteUser = async (id: string): Promise<void> => {
+	await fetch(new URL(`/api/users/${id}`, process.env.NEXT_PUBLIC_API_BASE_URL), {
+		method: 'DELETE'
 	});
 
 	revalidateTag(CACHE_TAG_GET_USERS);
