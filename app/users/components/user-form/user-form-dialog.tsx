@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { toast } from 'sonner';
 import {
 	Dialog,
 	DialogContent,
@@ -8,7 +9,6 @@ import {
 	DialogTitle,
 	DialogTrigger
 } from '@/components/ui/dialog';
-import { useToast } from '@/hooks/use-toast';
 
 import * as types from '@/app/users/types';
 import { UserForm } from './user-form';
@@ -29,23 +29,16 @@ type UserDialogProps = {
 export const UserFormDialog = ({ user, title, action, onSubmit, children }: UserDialogProps) => {
 	const [open, setOpen] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const { toast } = useToast();
 
 	const handleSubmit = async (values: types.UserForm) => {
 		setIsSubmitting(true);
 		try {
 			await onSubmit(values);
 			setOpen(false);
-			toast({
-				description: action.submit.onSuccess
-			});
+			toast(action.submit.onSuccess, { duration: 2000 });
 		} catch (error) {
 			// TODO: better error handling
-			toast({
-				variant: 'destructive',
-				title: 'Uh oh! Something went wrong.',
-				description: 'There was a problem with your request.'
-			});
+			toast.error('Uh oh! Something went wrong.', { duration: 5000 });
 			console.error(error);
 			setIsSubmitting(false); // allow the user to retry
 		}

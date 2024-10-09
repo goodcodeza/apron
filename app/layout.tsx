@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { Toaster } from '@/components/ui/toaster';
+import { Toaster } from 'sonner';
 import * as testids from '@/e2e/test-ids';
 import './globals.css';
 
@@ -18,7 +18,17 @@ export default function RootLayout({
 		<html lang="en">
 			<body>
 				{children}
-				<Toaster data-testid={testids.GLOBAL_NOTIFICATION} />
+				<Toaster
+					position="top-center"
+					toastOptions={{
+						unstyled: true,
+						classNames: {
+							toast:
+								'rounded-md text-sm font-medium transition-colors bg-primary text-primary-foreground shadow h-9 px-4 py-2'
+						}
+					}}
+					data-testid={testids.GLOBAL_NOTIFICATION}
+				/>
 			</body>
 		</html>
 	);

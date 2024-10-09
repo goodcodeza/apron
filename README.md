@@ -61,7 +61,6 @@ npm run start
 │   │   ├── page.tsx
 │   ├── page.tsx
 ├── components          # shared components (shadcn/ui)
-├── hooks               # shared hooks (shadcn/ui)
 ├── lib
 │   ├── utils.ts        # (shadcn/ui)
 ├── e2e                 # e2e specs (playwright)

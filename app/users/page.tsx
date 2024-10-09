@@ -26,7 +26,9 @@ export default async function Users() {
 					}}
 					onSubmit={createUser}
 				>
-					<Button data-testid={testids.USER_FORM_TRIGGER}>+ Add User</Button>
+					<Button className="rounded-full" data-testid={testids.USER_FORM_TRIGGER}>
+						+ Add User
+					</Button>
 				</UserFormDialog>
 			</header>
 			<DataTable columns={columns} data={data} />

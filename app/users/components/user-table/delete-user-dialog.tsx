@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { toast } from 'sonner';
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -11,7 +12,6 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger
 } from '@/components/ui/alert-dialog';
-import { useToast } from '@/hooks/use-toast';
 
 type DeleteUserDialogProps = {
 	id: string;
@@ -26,14 +26,11 @@ type DeleteUserDialogProps = {
 
 export const DeleteUserDialog = ({ id, onConfirm, action, children }: DeleteUserDialogProps) => {
 	const [open, setOpen] = useState(false);
-	const { toast } = useToast();
 
 	const handleConfirm = async () => {
 		await onConfirm(id);
 		setOpen(false);
-		toast({
-			description: action.submit.onSuccess
-		});
+		toast(action.submit.onSuccess, { duration: 2000 });
 	};
 
 	return (
