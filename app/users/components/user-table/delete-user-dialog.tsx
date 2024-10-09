@@ -43,7 +43,7 @@ export const DeleteUserDialog = ({ id, onConfirm, children }: DeleteUserDialogPr
 							className="bg-red-500 hover:bg-red-600 text-white"
 							onClick={handleConfirm}
 						>
-							Continue
+							Delete
 						</AlertDialogAction>
 						<AlertDialogCancel>Cancel</AlertDialogCancel>
 					</div>

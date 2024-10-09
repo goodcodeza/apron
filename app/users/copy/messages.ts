@@ -3,7 +3,7 @@ import * as constants from '@/app/users/constants';
 export const messages = {
 	// Micro Copy
 	'user.user_form__create.title': 'Add user',
-	'user.user_form__create.action.submit': 'Add',
+	'user.user_form__create.action.submit': 'Add', // The design says that this could be 'Save' in certain cases - will need to clarify with product.
 	'user.user_form__edit.title': 'Edit user',
 	'user.user_form__edit.action.submit': 'Save',
 	'user.toast__user_created': 'User added',
