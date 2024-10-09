@@ -22,24 +22,20 @@ import {
 } from '@/components/ui/select';
 
 import { USER_GENDER } from '@/app/users/constants';
+import { useMessages } from '@/app/users/contexts/messages';
 import { UserFormSchema } from '@/app/users/schema';
 import * as types from '@/app/users/types';
 import * as testids from '@/e2e/test-ids';
 
 type UserFormProps = {
 	user?: types.UserForm;
-	// TODO: move this into a Messages Context
-	action: {
-		submit: {
-			text: string;
-		};
-	};
+	mode: 'create' | 'edit';
 	disabled: boolean;
 	onCancel: () => void;
 	onSubmit: (values: types.UserForm) => void;
 };
 
-export const UserForm = ({ user, action, disabled, onCancel, onSubmit }: UserFormProps) => {
+export const UserForm = ({ user, mode, disabled, onCancel, onSubmit }: UserFormProps) => {
 	const form = useForm<types.UserForm>({
 		resolver: yupResolver(UserFormSchema),
 		defaultValues: user ?? {
@@ -49,6 +45,7 @@ export const UserForm = ({ user, action, disabled, onCancel, onSubmit }: UserFor
 			age: '' as unknown as number
 		}
 	});
+	const messages = useMessages();
 
 	return (
 		<Form {...form}>
@@ -133,7 +130,9 @@ export const UserForm = ({ user, action, disabled, onCancel, onSubmit }: UserFor
 						disabled={disabled || form.formState.isSubmitting}
 						data-testid={testids.USER_FORM_ACTION_SUBMIT}
 					>
-						{action.submit.text}
+						{mode === 'create'
+							? messages['user.user_form__create.action.submit']
+							: messages['user.user_form__edit.action.submit']}
 					</Button>
 				</div>
 			</form>

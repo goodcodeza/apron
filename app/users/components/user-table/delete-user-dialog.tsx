@@ -12,25 +12,22 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger
 } from '@/components/ui/alert-dialog';
+import { useMessages } from '@/app/users/contexts/messages';
 
 type DeleteUserDialogProps = {
 	id: string;
 	onConfirm: (id: string) => Promise<void>;
-	action: {
-		submit: {
-			onSuccess: string;
-		};
-	};
 	children: React.ReactNode;
 };
 
-export const DeleteUserDialog = ({ id, onConfirm, action, children }: DeleteUserDialogProps) => {
+export const DeleteUserDialog = ({ id, onConfirm, children }: DeleteUserDialogProps) => {
 	const [open, setOpen] = useState(false);
+	const messages = useMessages();
 
 	const handleConfirm = async () => {
 		await onConfirm(id);
 		setOpen(false);
-		toast(action.submit.onSuccess, { duration: 2000 });
+		toast(messages['user.toast__user_deleted'], { duration: 2000 });
 	};
 
 	return (

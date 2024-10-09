@@ -3,7 +3,6 @@
 import { CaretSortIcon, TrashIcon } from '@radix-ui/react-icons';
 import { Column, ColumnDef } from '@tanstack/react-table';
 
-import * as messages from '@/app/users/messages';
 import { deleteUser, editUser } from '@/app/users/user-service';
 import { User } from '@/app/users/types';
 import { Button } from '@/components/ui/button';
@@ -48,28 +47,10 @@ export const columns: ColumnDef<User>[] = [
 
 			return (
 				<div className="flex items-center space-x-2 justify-end">
-					<UserFormDialog
-						user={user}
-						title={messages.EDIT_USER_FORM_TITLE}
-						action={{
-							submit: {
-								text: messages.FORM_ACTION_SAVE_USER,
-								onSuccess: messages.SAVE_USER_SUCCESS_TOAST
-							}
-						}}
-						onSubmit={(values) => editUser(user.id, values)}
-					>
+					<UserFormDialog user={user} mode="edit" onSubmit={(values) => editUser(user.id, values)}>
 						<Button variant="outline">Edit</Button>
 					</UserFormDialog>
-					<DeleteUserDialog
-						id={user.id}
-						onConfirm={deleteUser}
-						action={{
-							submit: {
-								onSuccess: messages.DELETE_USER_SUCCESS_TOAST
-							}
-						}}
-					>
+					<DeleteUserDialog id={user.id} onConfirm={deleteUser}>
 						<Button variant="ghost" size="icon">
 							<TrashIcon className="h-4 w-4" />
 						</Button>
