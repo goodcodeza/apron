@@ -2,35 +2,117 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+First, intall the application dependencies:
+
+```bash
+npm i
+```
+
+Next, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+
+In a new terminal, run the mock api server:
+
+```bash
+npm run start:mock-api
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Running Tests
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+With the development and mock api servers running, you can run the tests in headless mode:
 
-## Learn More
+```bash
+npm run test:e2e
+```
 
-To learn more about Next.js, take a look at the following resources:
+Or, visually inspect the tests:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run test:e2e:debug
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Build for Production
 
-## Deploy on Vercel
+First, confirm the correct environment variables are set in `.env.production`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Next, run the build command to create a production bundle:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run build
+```
+
+Then, run the production bundle:
+
+```bash
+npm run start
+```
+
+## Project Structure
+
+```
+├── app                 # nextjs app root
+│   ├── users           # route /users
+│   │   ├── components  # specific to this route
+│   │   ├── page.tsx
+│   ├── page.tsx
+├── components          # shared components (shadcn/ui)
+├── hooks               # shared hooks (shadcn/ui)
+├── lib
+│   ├── utils.ts        # (shadcn/ui)
+├── e2e                 # e2e specs (playwright)
+├── mocks               # mock api config (json-server)
+├── node_modules
+├── package.json
+├── package-lock.json
+```
+
+## Design Decisions
+
+The following considerations were made during the design and development of the application. Points marked as Out of Scope were deprioritised due to time constraints.
+
+1. Meta Framework vs SPA
+   - Considerations
+     - time constraints: extra effort to bootstrap a SPA with bundling and routing
+     - scalability: future requirements may add features like SSR or or image optimisation
+     - expertise: experienced with data fetching paradigms which reduces time spent debugging.
+     - **Decision: Use Next.js**
+2. Testing Strategy
+   - e2e
+     - tests a range of components in the browser
+     - provides a target (when this is built, stop)
+     - a large test suite can become brittle, especially if testing to many edge cases (like variations of input validation)
+   - unit
+     - the application consists many presentation components that don't get value from unit tests
+   - **Decision: Implement e2e tests**
+3. Mock API Server
+   - build it
+     - using `/api` routes and implementing an in-memory storage is flexible
+     - time and effort in builing a mock solution
+   - buy it
+     - out of the box solution is quick to set up
+     - urls can be configured to match requirements
+   - **Decision: Use out of the box solution - `json-server`**
+4. Project Structure
+   - **Decision: Use default config and directories provided by libraries**
+   - Motivation
+     - Works out of the box
+     - Single developer on the project
+     - Limited scope
+     - As the scope grows, we can refactor into a scalable project structure
+5. Production Readiness Checklist
+   - [x] Acceptance tests
+   - [x] Optimised production bundle
+     - SSG/SSR on applicable routes
+     - remove `data-testid` attributes
+   - [o] Error handling
+     - network failure handled on create/edit/delete actions.
+     - App level error handling - Out of Scope
+     - Monitoring (Sentry) - Out of Scope
+   - [ ] Configure [Content Security Policy](https://nextjs.org/docs/app/building-your-application/configuring/content-security-policy) - Out of Scope
+   - [ ] Docker - Out of Scope
+   - [ ] GitHub Actions - Out of Scope
